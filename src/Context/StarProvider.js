@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import StarContext from './StarContext';
 import fetchPlanets from '../api/planetsApi';
 
@@ -25,5 +26,9 @@ function StarProvider({ children }) {
     </main>
   );
 }
+
+StarProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default StarProvider;
