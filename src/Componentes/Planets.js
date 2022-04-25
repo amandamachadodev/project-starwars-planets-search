@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import StarContext from '../Context/StarContext';
 
 function Planets() {
-  const { getPlanets, data, filterByName, setPlanets } = useContext(StarContext);
+  const { getPlanets, data, filterByName } = useContext(StarContext);
   useEffect(() => {
     getPlanets();
   }, [getPlanets]);
@@ -10,14 +10,15 @@ function Planets() {
   useEffect(() => {
   }, [data]);
 
-  // useEffect(() => {
-  //   if (filterByName.length > 0) {
-  //     const filteredByName = data.filter((item) => item.name
-  //       .toLowerCase().includes(filterByName.toLowerCase()));
-  //     setPlanets(filteredByName);
-  //     console.log(data);
-  //   }
-  // }, [filterByName]);
+  useEffect(() => {
+    if (filterByName.length > 0) {
+      const filteredByName = data.filter((item) => item.name
+        .toLowerCase().includes(filterByName.toLowerCase()));
+      setPlanets(filteredByName);
+      console.log(data);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
