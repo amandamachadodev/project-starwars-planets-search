@@ -1,19 +1,64 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import StarContext from '../Context/StarContext';
 
-function Planets({ name }) {
+function Planets() {
+  const { getPlanets, data, filterByName, setPlanets } = useContext(StarContext);
+  useEffect(() => {
+    getPlanets();
+  }, [getPlanets]);
+
+  useEffect(() => {
+  }, [data]);
+
+  // useEffect(() => {
+  //   if (filterByName.length > 0) {
+  //     const filteredByName = data.filter((item) => item.name
+  //       .toLowerCase().includes(filterByName.toLowerCase()));
+  //     setPlanets(filteredByName);
+  //     console.log(data);
+  //   }
+  // }, [filterByName]);
+
   return (
     <div>
-      <tr>
-        <td>{name}</td>
-        {/* <td>{planet.rotation_period}</td>
-        <td>{planet.orbital_period}</td>
-        <td>{planet.diameter}</td>
-        <td>{planet.climate}</td>
-        <td>{planet.gravity}</td>
-        <td>{planet.terrain}</td>
-        <td>{planet.surface_water}</td>
-        <td>{planet.population}</td> */}
-      </tr>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rotation Pehiod</th>
+            <th>Ohbital Pehiod</th>
+            <th>Diameteh</th>
+            <th>Climate</th>
+            <th>Ghavity</th>
+            <th>Tehhain</th>
+            <th>Suhface Wateh</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((planet) => (
+            <tr key={ planet.name }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

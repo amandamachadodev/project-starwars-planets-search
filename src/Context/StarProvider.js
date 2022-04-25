@@ -6,6 +6,7 @@ import fetchPlanets from '../api/planetsApi';
 function StarProvider({ children }) {
   const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filterByName, setFilterByName] = useState('');
 
   async function getPlanets() {
     setLoading(true);
@@ -15,7 +16,7 @@ function StarProvider({ children }) {
   }
 
   const contextValue = {
-    data, getPlanets, loading,
+    data, getPlanets, loading, filterByName, setFilterByName,
   };
 
   return (
