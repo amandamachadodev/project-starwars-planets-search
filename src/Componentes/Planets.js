@@ -2,23 +2,38 @@ import React, { useContext, useEffect } from 'react';
 import StarContext from '../Context/StarContext';
 
 function Planets() {
-  const { getPlanets, data, filterByName } = useContext(StarContext);
+  const { getPlanets,
+    data,
+    filterByName,
+    setFilteredData,
+    filteredData } = useContext(StarContext);
   useEffect(() => {
     getPlanets();
-  }, [getPlanets]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
   }, [data]);
 
   useEffect(() => {
-    if (filterByName.length > 0) {
-      const filteredByName = data.filter((item) => item.name
-        .toLowerCase().includes(filterByName.toLowerCase()));
-      setPlanets(filteredByName);
-      console.log(data);
+    if (filterByName.name.length > 0) {
+      setFilteredData((data.filter((item) => item.name
+        .toLowerCase().includes(filterByName.name.toLowerCase()))));
+    } else {
+      setFilteredData(data);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [filterByName, data]);
+
+  // const filtered = () => {
+  //   if (filterByName.length > 0) {
+  //     const filteredByName = [];
+  //     filteredByName.push(data.filter((item) => item.name
+  //       .toLowerCase().includes(filterByName.toLowerCase())));
+  //     console.log(filteredByName);
+  //   }
+  //   return true;
+  // };
 
   return (
     <div>
@@ -41,7 +56,7 @@ function Planets() {
           </tr>
         </thead>
         <tbody>
-          {data.map((planet) => (
+          {filteredData.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>

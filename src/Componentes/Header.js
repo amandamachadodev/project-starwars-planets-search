@@ -7,7 +7,11 @@ function Header() {
   return (
     <div>
       <header>
-        <input type="text" onChange={ ({ target }) => setFilterByName(target.value) } />
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ ({ target }) => setFilterByName({ name: target.value }) }
+        />
       </header>
     </div>
   );
