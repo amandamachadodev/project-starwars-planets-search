@@ -7,7 +7,7 @@ function StarProvider({ children }) {
   const [data, setPlanets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterByName, setFilterByName] = useState({ name: '' });
-  const [filteredData, setFilteredData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
 
   async function getPlanets() {
     setLoading(true);
@@ -22,8 +22,8 @@ function StarProvider({ children }) {
     loading,
     filterByName,
     setFilterByName,
-    setFilteredData,
-    filteredData,
+    setFiltered,
+    filtered,
   };
 
   return (

@@ -5,22 +5,19 @@ function Planets() {
   const { getPlanets,
     data,
     filterByName,
-    setFilteredData,
-    filteredData } = useContext(StarContext);
+    setFiltered,
+    filtered } = useContext(StarContext);
   useEffect(() => {
     getPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-  }, [data]);
-
-  useEffect(() => {
     if (filterByName.name.length > 0) {
-      setFilteredData((data.filter((item) => item.name
+      setFiltered((data.filter((item) => item.name
         .toLowerCase().includes(filterByName.name.toLowerCase()))));
     } else {
-      setFilteredData(data);
+      setFiltered(data);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByName, data]);
@@ -56,7 +53,7 @@ function Planets() {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((planet) => (
+          {filtered.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
