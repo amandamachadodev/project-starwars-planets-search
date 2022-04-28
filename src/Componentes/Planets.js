@@ -6,7 +6,7 @@ function Planets() {
     data,
     filterByName,
     setFiltered,
-    filtered } = useContext(StarContext);
+    filtered, activeFilter } = useContext(StarContext);
   useEffect(() => {
     getPlanets();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -22,15 +22,27 @@ function Planets() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByName, data]);
 
-  // const filtered = () => {
-  //   if (filterByName.length > 0) {
-  //     const filteredByName = [];
-  //     filteredByName.push(data.filter((item) => item.name
-  //       .toLowerCase().includes(filterByName.toLowerCase())));
-  //     console.log(filteredByName);
-  //   }
-  //   return true;
-  // };
+  useEffect(() => {
+    activeFilter.forEach((filter) => {
+      switch (filter.comparison) {
+      case 'maior que':
+        setFiltered(data.filter((item) => Number(item[filter.column])
+          > Number(filter.value)));
+        break;
+      case 'menor que':
+        setFiltered(data.filter((item) => Number(item[filter.column])
+          < Number(filter.value)));
+        break;
+      case 'igual a':
+        setFiltered(data.filter((item) => Number(item[filter.column])
+          === Number(filter.value)));
+        break;
+      default:
+        setFiltered(data);
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter]);
 
   return (
     <div>

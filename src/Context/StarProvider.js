@@ -8,6 +8,11 @@ function StarProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filtered, setFiltered] = useState([]);
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0 });
+  const [activeFilter, setActiveFilter] = useState([]);
 
   async function getPlanets() {
     setLoading(true);
@@ -24,6 +29,10 @@ function StarProvider({ children }) {
     setFilterByName,
     setFiltered,
     filtered,
+    filterByNumericValues,
+    setFilterByNumericValues,
+    activeFilter,
+    setActiveFilter,
   };
 
   return (
