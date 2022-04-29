@@ -9,6 +9,7 @@ function Planets() {
     filtered, activeFilter } = useContext(StarContext);
   useEffect(() => {
     getPlanets();
+    setFiltered(data);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -26,15 +27,15 @@ function Planets() {
     activeFilter.forEach((filter) => {
       switch (filter.comparison) {
       case 'maior que':
-        setFiltered(data.filter((item) => Number(item[filter.column])
+        setFiltered(filtered.filter((item) => Number(item[filter.column])
           > Number(filter.value)));
         break;
       case 'menor que':
-        setFiltered(data.filter((item) => Number(item[filter.column])
+        setFiltered(filtered.filter((item) => Number(item[filter.column])
           < Number(filter.value)));
         break;
       case 'igual a':
-        setFiltered(data.filter((item) => Number(item[filter.column])
+        setFiltered(filtered.filter((item) => Number(item[filter.column])
           === Number(filter.value)));
         break;
       default:

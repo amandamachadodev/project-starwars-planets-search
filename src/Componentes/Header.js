@@ -73,6 +73,11 @@ function Header() {
           >
             FITLRAR
           </button>
+          {activeFilter.map((item, index) => (
+            <div key={ index }>
+              <p>{`${item.column} ${item.comparison} ${item.value}`}</p>
+              <span role="img">🗑️</span>
+            </div>))}
         </div>
       </header>
     </div>
