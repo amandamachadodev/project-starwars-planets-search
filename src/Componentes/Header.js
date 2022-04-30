@@ -1,9 +1,75 @@
-import React, { useContext } from 'react';
+/* eslint-disable indent */
+import React, { useContext, useEffect } from 'react';
 import StarContext from '../Context/StarContext';
 
 function Header() {
-  const { setFilterByName, setFilterByNumericValues,
-    filterByNumericValues, activeFilter, setActiveFilter } = useContext(StarContext);
+  const { setFilterByName, setFilterByNumericValues, filterColumn, setFilterColumn,
+    filterByNumericValues, activeFilter, setActiveFilter, removeFilter, columns, filtered,
+    setFiltered, data, setRemoveFilter, removeFilterNumeric,
+    setRemoveFilterNumeric } = useContext(StarContext);
+  useEffect(() => {
+    const removeColumn = filterColumn;
+    if (activeFilter.length !== 0) {
+      setFilterColumn(activeFilter
+        .map((item) => removeColumn.filter((e) => item.column !== e))[0]);
+    } else {
+      setFilterColumn(removeColumn);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter]);
+
+  useEffect(() => {
+    const remove = activeFilter;
+    const removed = remove.filter((item) => item.column !== removeFilter);
+    setActiveFilter(remove.filter((item) => item.column !== removeFilter));
+    console.log(removed);
+    const magicNumber = 3;
+    if (removed.length === 0) {
+      setFiltered(data);
+      setFilterColumn(columns);
+    } else if (removed.length === magicNumber) {
+      removed.forEach((filter) => {
+        switch (filter.comparison) {
+        case 'maior que':
+          setFiltered(filtered.filter((item) => Number(item[filter.column])
+            > Number(filter.value)));
+          break;
+        case 'menor que':
+          setFiltered(filtered.filter((item) => Number(item[filter.column])
+            < Number(filter.value)));
+          break;
+        case 'igual a':
+          setFiltered(filtered.filter((item) => Number(item[filter.column])
+            === Number(filter.value)));
+          break;
+        default:
+          setFiltered(data);
+        }
+      });
+    } else {
+      console.log('não');
+      removed.forEach((filter) => {
+        switch (filter.comparison) {
+        case 'maior que':
+          setFiltered(data.filter((item) => Number(item[filter.column])
+            > Number(filter.value)));
+          break;
+        case 'menor que':
+          setFiltered(data.filter((item) => Number(item[filter.column])
+            < Number(filter.value)));
+          break;
+        case 'igual a':
+          setFiltered(data.filter((item) => Number(item[filter.column])
+            === Number(filter.value)));
+          break;
+        default:
+          setFiltered(data);
+        }
+      });
+    }
+    // console.log(activeFilter);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [removeFilter]);
 
   return (
     <div>
@@ -25,8 +91,7 @@ function Header() {
               onChange={ ({ target }) => setFilterByNumericValues({
                 ...filterByNumericValues, column: target.value }) }
             >
-              {['population', 'orbital_period', 'diameter',
-                'rotation_period', 'surface_water']
+              {filterColumn
                 .map((column, index) => (
                   <option key={ index } value={ column }>{column}</option>))}
             </select>
@@ -65,7 +130,7 @@ function Header() {
             onClick={ () => {
               setActiveFilter([...activeFilter, filterByNumericValues]);
               setFilterByNumericValues({
-                column: 'population',
+                column: filterColumn[0],
                 comparison: 'maior que',
                 value: 0,
               });
@@ -75,9 +140,32 @@ function Header() {
           </button>
           {activeFilter.map((item, index) => (
             <div key={ index }>
-              <p>{`${item.column} ${item.comparison} ${item.value}`}</p>
-              <span role="img">🗑️</span>
+              <p
+                data-testid="filter"
+              >
+                {`${item.column} ${item.comparison} ${item.value}`}
+              </p>
+              <button
+                type="button"
+                onClick={ () => {
+                  setRemoveFilter(item.column);
+                  setRemoveFilterNumeric([...removeFilterNumeric, item.column]);
+                } }
+              >
+                x
+              </button>
             </div>))}
+          <button
+            type="button"
+            data-testid="button-remove-filters"
+            onClick={ () => {
+              setActiveFilter([]);
+              setFilterColumn(columns);
+            } }
+          >
+            REMOVER FILTROS
+
+          </button>
         </div>
       </header>
     </div>

@@ -13,6 +13,12 @@ function StarProvider({ children }) {
     comparison: 'maior que',
     value: 0 });
   const [activeFilter, setActiveFilter] = useState([]);
+  const [columns, setColumns] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
+  const [filterColumn, setFilterColumn] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
+  const [removeFilter, setRemoveFilter] = useState('');
+  const [removeFilterNumeric, setRemoveFilterNumeric] = useState([]);
 
   async function getPlanets() {
     setLoading(true);
@@ -33,6 +39,14 @@ function StarProvider({ children }) {
     setFilterByNumericValues,
     activeFilter,
     setActiveFilter,
+    filterColumn,
+    setFilterColumn,
+    removeFilter,
+    setRemoveFilter,
+    columns,
+    setColumns,
+    removeFilterNumeric,
+    setRemoveFilterNumeric,
   };
 
   return (
