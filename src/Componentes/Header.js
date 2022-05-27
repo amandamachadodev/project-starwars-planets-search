@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarContext from '../Context/StarContext';
 
 function Header() {
@@ -7,22 +7,35 @@ function Header() {
     filterByNumericValues, activeFilter, setActiveFilter, removeFilter, columns, filtered,
     setFiltered, data, setRemoveFilter, removeFilterNumeric,
     setRemoveFilterNumeric } = useContext(StarContext);
-  useEffect(() => {
-    const removeColumn = filterColumn;
-    if (activeFilter.length !== 0) {
-      setFilterColumn(activeFilter
-        .map((item) => removeColumn.filter((e) => item.column !== e))[0]);
-    } else {
-      setFilterColumn(removeColumn);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeFilter]);
+
+   const [removeColumn, setRemoveColumn] = useState([]);
+   useEffect(() => {
+     if (removeColumn.length !== 0) {
+       console.log('oi', removeColumn);
+       setFilterColumn(columns.filter((item) => !removeColumn.includes(item)));
+       console.log('if', columns.filter((item) => !removeColumn.includes(item)));
+     } else {
+       setFilterColumn(columns);
+       console.log('else');
+     }
+       // console.log(filterColumn);
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [removeColumn]);
+
+   useEffect(() => {
+    setFilterByNumericValues({
+      column: filterColumn[0],
+      comparison: 'maior que',
+      value: 0,
+    });
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [filterColumn]);
 
   useEffect(() => {
     const remove = activeFilter;
     const removed = remove.filter((item) => item.column !== removeFilter);
     setActiveFilter(remove.filter((item) => item.column !== removeFilter));
-    console.log(removed);
+    console.log('remove', removed);
     const magicNumber = 3;
     if (removed.length === 0) {
       setFiltered(data);
@@ -87,9 +100,10 @@ function Header() {
             <select
               data-testid="column-filter"
               name="column"
-              value={ filterByNumericValues.column }
-              onChange={ ({ target }) => setFilterByNumericValues({
-                ...filterByNumericValues, column: target.value }) }
+              onChange={ ({ target }) => {
+              setFilterByNumericValues({
+                ...filterByNumericValues, column: target.value });
+              } }
             >
               {filterColumn
                 .map((column, index) => (
@@ -129,20 +143,14 @@ function Header() {
             data-testid="button-filter"
             onClick={ () => {
               setActiveFilter([...activeFilter, filterByNumericValues]);
-              setFilterByNumericValues({
-                column: filterColumn[0],
-                comparison: 'maior que',
-                value: 0,
-              });
+                setRemoveColumn([...removeColumn, filterByNumericValues.column]);
             } }
           >
             FITLRAR
           </button>
           {activeFilter.map((item, index) => (
-            <div key={ index }>
-              <p
-                data-testid="filter"
-              >
+            <div key={ index } data-testid="filter">
+              <p>
                 {`${item.column} ${item.comparison} ${item.value}`}
               </p>
               <button
@@ -150,6 +158,9 @@ function Header() {
                 onClick={ () => {
                   setRemoveFilter(item.column);
                   setRemoveFilterNumeric([...removeFilterNumeric, item.column]);
+                  if (removeColumn.filter((e) => item.column.includes(e))) {
+                    setFilterColumn([...filterColumn, item.column]);
+                  }
                 } }
               >
                 x
@@ -161,6 +172,7 @@ function Header() {
             onClick={ () => {
               setActiveFilter([]);
               setFilterColumn(columns);
+              setRemoveFilter([]);
             } }
           >
             REMOVER FILTROS

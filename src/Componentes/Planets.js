@@ -7,6 +7,7 @@ function Planets() {
     filterByName,
     setFiltered,
     filtered, activeFilter } = useContext(StarContext);
+
   useEffect(() => {
     getPlanets();
     setFiltered(data);
