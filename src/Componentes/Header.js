@@ -88,12 +88,14 @@ function Header() {
       <header>
         <div>
           <input
+            placeholder="Buscar"
+            className="Name"
             type="text"
             data-testid="name-filter"
             onChange={ ({ target }) => setFilterByName({ name: target.value }) }
           />
         </div>
-        <div>
+        <div className="Content-1">
           <label htmlFor="column">
             Coluna
             <select
@@ -110,7 +112,7 @@ function Header() {
             </select>
           </label>
         </div>
-        <div>
+        <div className="Content-1">
           <label htmlFor="comparison">
             Operador
             <select
@@ -126,7 +128,7 @@ function Header() {
             </select>
           </label>
         </div>
-        <div>
+        <div className="Content-1">
           <input
             type="number"
             data-testid="value-filter"
@@ -136,35 +138,18 @@ function Header() {
               ...filterByNumericValues, value: target.value }) }
           />
         </div>
-        <div>
-          <button
-            type="button"
-            data-testid="button-filter"
-            onClick={ () => {
-              setActiveFilter([...activeFilter, filterByNumericValues]);
-              setRemoveColumn([...removeColumn, filterByNumericValues.column]);
-            } }
-          >
-            FITLRAR
-          </button>
-          {activeFilter.map((item, index) => (
-            <div key={ index } data-testid="filter">
-              <p>
-                {`${item.column} ${item.comparison} ${item.value}`}
-              </p>
-              <button
-                type="button"
-                onClick={ () => {
-                  setRemoveFilter(item.column);
-                  setRemoveFilterNumeric([...removeFilterNumeric, item.column]);
-                  if (removeColumn.filter((e) => item.column.includes(e))) {
-                    setFilterColumn([...filterColumn, item.column]);
-                  }
-                } }
-              >
-                x
-              </button>
-            </div>))}
+        <button
+          className="Content-1"
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => {
+            setActiveFilter([...activeFilter, filterByNumericValues]);
+            setRemoveColumn([...removeColumn, filterByNumericValues.column]);
+          } }
+        >
+          FITLRAR
+        </button>
+        <div className="Content-2">
           <label htmlFor="sort">
             Ordenar
             <select
@@ -202,6 +187,25 @@ function Header() {
 
           </button>
         </div>
+        {activeFilter.map((item, index) => (
+          <div key={ index } data-testid="filter">
+            <p>
+              {`${item.column} ${item.comparison} ${item.value}`}
+            </p>
+            <button
+              className="delete"
+              type="button"
+              onClick={ () => {
+                setRemoveFilter(item.column);
+                setRemoveFilterNumeric([...removeFilterNumeric, item.column]);
+                if (removeColumn.filter((e) => item.column.includes(e))) {
+                  setFilterColumn([...filterColumn, item.column]);
+                }
+              } }
+            >
+              X
+            </button>
+          </div>))}
       </header>
     </div>
   );
