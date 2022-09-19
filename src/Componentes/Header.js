@@ -10,14 +10,10 @@ function Header() {
   const [removeColumn, setRemoveColumn] = useState([]);
   useEffect(() => {
     if (removeColumn.length !== 0) {
-      console.log('oi', removeColumn);
       setFilterColumn(columns.filter((item) => !removeColumn.includes(item)));
-      console.log('if', columns.filter((item) => !removeColumn.includes(item)));
     } else {
       setFilterColumn(columns);
-      console.log('else');
     }
-    // console.log(filterColumn);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeColumn]);
 
@@ -79,7 +75,6 @@ function Header() {
         }
       });
     }
-    // console.log(activeFilter);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeFilter]);
 
