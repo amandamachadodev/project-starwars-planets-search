@@ -7,17 +7,26 @@ function Header() {
     setFiltered, data, setRemoveFilter, removeFilterNumeric,
     setRemoveFilterNumeric } = useContext(StarContext);
 
+  const [order, setOrder] = useState({ name: 'population', direction: '' });
+  const [activeOrder, setActiveOrder] = useState([]);
   const [removeColumn, setRemoveColumn] = useState([]);
+
+  useEffect(() => {
+    const ord = [...filtered];
+    if (order.direction === 'asc') {
+      setFiltered(ord.sort((a, b) => b[order.name] - a[order.name]));
+    } else {
+      setFiltered(ord.sort((a, b) => a[order.name] - b[order.name]));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeOrder]);
+
   useEffect(() => {
     if (removeColumn.length !== 0) {
-      console.log('oi', removeColumn);
       setFilterColumn(columns.filter((item) => !removeColumn.includes(item)));
-      console.log('if', columns.filter((item) => !removeColumn.includes(item)));
     } else {
       setFilterColumn(columns);
-      console.log('else');
     }
-    // console.log(filterColumn);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeColumn]);
 
@@ -79,7 +88,6 @@ function Header() {
         }
       });
     }
-    // console.log(activeFilter);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [removeFilter]);
 
@@ -156,8 +164,8 @@ function Header() {
               data-testid="column-sort"
               name="sort"
               onChange={ ({ target }) => {
-                setFilterByNumericValues({
-                  ...filterByNumericValues, column: target.value });
+                setOrder({
+                  ...order, name: target.value });
               } }
             >
               {columns
@@ -167,13 +175,39 @@ function Header() {
           </label>
           <label htmlFor="asc">
             Ascendente
-            <input type="radio" data-testid="column-sort-input-asc" name="asc" />
+            <input
+              type="radio"
+              value="asc"
+              data-testid="column-sort-input-asc"
+              name="order"
+              onChange={ ({ target }) => {
+                setOrder({
+                  ...order, direction: target.value });
+              } }
+            />
           </label>
           <label htmlFor="desc">
             Descendente
-            <input type="radio" data-testid="column-sort-input-desc" name="desc" />
+            <input
+              value="desc"
+              type="radio"
+              data-testid="column-sort-input-desc"
+              name="order"
+              onChange={ ({ target }) => {
+                setOrder({
+                  ...order, direction: target.value });
+              } }
+            />
           </label>
-          <button type="button" data-testid="column-sort-button">ORDENAR</button>
+          <button
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ () => {
+              setActiveOrder([order]);
+            } }
+          >
+            ORDENAR
+          </button>
           <button
             type="button"
             data-testid="button-remove-filters"
