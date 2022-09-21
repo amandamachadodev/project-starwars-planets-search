@@ -33,7 +33,7 @@ h1 {
   animation: typewriter 2s steps(13) infinite alternate,
     blink 800ms steps(13) infinite normal;
   border-right: 5px solid white;
-  font-size: 40px;
+  font-size: 26px;
   overflow: hidden;
   text-shadow: 0 0 3px rgb(118, 241, 250) , 0 0 10px rgb(87, 83, 82);
   white-space: nowrap;

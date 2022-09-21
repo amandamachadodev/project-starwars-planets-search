@@ -68,7 +68,6 @@ function Header() {
         }
       });
     } else {
-      console.log('não');
       removed.forEach((filter) => {
         switch (filter.comparison) {
         case 'maior que':
@@ -105,7 +104,7 @@ function Header() {
         </div>
         <div className="Content-1">
           <label htmlFor="column">
-            Coluna
+            Column
             <select
               data-testid="column-filter"
               name="column"
@@ -122,7 +121,7 @@ function Header() {
         </div>
         <div className="Content-1">
           <label htmlFor="comparison">
-            Operador
+            Operator
             <select
               data-testid="comparison-filter"
               name="comparison"
@@ -155,11 +154,11 @@ function Header() {
             setRemoveColumn([...removeColumn, filterByNumericValues.column]);
           } }
         >
-          FITLRAR
+          FILTRATE
         </button>
         <div className="Content-2">
           <label htmlFor="sort">
-            Ordenar
+            Sort
             <select
               data-testid="column-sort"
               name="sort"
@@ -174,7 +173,7 @@ function Header() {
             </select>
           </label>
           <label htmlFor="asc">
-            Ascendente
+            Ascending
             <input
               type="radio"
               value="asc"
@@ -187,7 +186,7 @@ function Header() {
             />
           </label>
           <label htmlFor="desc">
-            Descendente
+            Descendant
             <input
               value="desc"
               type="radio"
@@ -206,7 +205,7 @@ function Header() {
               setActiveOrder([order]);
             } }
           >
-            ORDENAR
+            SORT
           </button>
           <button
             type="button"
@@ -217,7 +216,7 @@ function Header() {
               setRemoveFilter([]);
             } }
           >
-            REMOVER FILTROS
+            REMOVE FILTERS
 
           </button>
         </div>
