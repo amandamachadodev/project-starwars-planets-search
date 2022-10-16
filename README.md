@@ -1,33 +1,8 @@
-# 🚧 README em construção 🚧
 
-<!-- Olá, Tryber!
+# Projeto StarWars Planets Search
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+Este é um projeto React.js.
+Nele foram implementados vários filtros de busca utilizando hooks para gerenciar o ciclo de vida dos componentes e context api como gerenciador de estados.
 
-É essencial que você preencha esse documento por conta própria, ok?
-
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
-
--->
-
-<!-- Projeto - StarWars Datatable com Context API e Hooks
-  
-Neste projeto pude treinar bastante o uso de Hooks e Context API, criando uma lógica de filtros para uma tabela de dados.
-  
-  
-Tecnologias utilizadas
-   JavaScript
-   React
-   Hooks e Context API
-   Foi utilizada uma API externa
-   
-   
-Para baixar as dependências da aplicação na sua máquina é necessário ter o node instalado e utilizar o comando abaixo
-   
-Para rodar a aplicação no seu browser local utilize o comando abaixo
--->
+Link:
+https://project-starwars-planets-search-rho.vercel.app/
